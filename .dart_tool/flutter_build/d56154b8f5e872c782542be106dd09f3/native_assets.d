@@ -1,0 +1,1 @@
+ C:\\projects\\easy-gyrm-mobile\\.dart_tool\\flutter_build\\d56154b8f5e872c782542be106dd09f3\\native_assets.yaml: 
