@@ -25,3 +25,4 @@ com.example.easy_gym_mobile.app-resValues-23 C:\projects\easy-gyrm-mobile\build\
 com.example.easy_gym_mobile.app-packageDebugResources-24 C:\projects\easy-gyrm-mobile\build\app\intermediates\incremental\debug\packageDebugResources\merged.dir
 com.example.easy_gym_mobile.app-packageDebugResources-25 C:\projects\easy-gyrm-mobile\build\app\intermediates\incremental\debug\packageDebugResources\stripped.dir
 com.example.easy_gym_mobile.app-merged_res-26 C:\projects\easy-gyrm-mobile\build\app\intermediates\merged_res\debug
+com.example.easy_gym_mobile.app-packaged_res-27 C:\projects\easy-gyrm-mobile\build\path_provider_android\intermediates\packaged_res\debug

@@ -1,14 +1,14 @@
 // remover apos corrigir este codigo
 // ignore_for_file: dead_code, unused_field, prefer_final_fields, unused_import
-import 'dart:convert';
 
 import 'package:easy_gym_mobile/componentes/card_treino_aluno.dart';
 import 'package:easy_gym_mobile/estado.dart';
+import 'package:easy_gym_mobile/servicos/auth_service.dart';
+import 'package:easy_gym_mobile/servicos/alunos_service.dart';
+import 'package:easy_gym_mobile/servicos/treinos_service.dart';
 import 'package:flat_list/flat_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 import 'package:toast/toast.dart';
 
 class DadosAlunos extends StatefulWidget {
@@ -20,161 +20,220 @@ class DadosAlunos extends StatefulWidget {
   }
 }
 
-enum _EstadoAluno { naoVerificado, temAluno, semAluno }
-
 class _DadosAlunosState extends State<DadosAlunos> {
-  late dynamic _feedDeAlunos;
-
-  _EstadoAluno _temAluno = _EstadoAluno.naoVerificado;
-  late dynamic _aluno;
+  bool _carregando = true;
+  Aluno? _aluno;
+  List<Treino> _treinos = [];
+  String? _erro;
 
   @override
   void initState() {
     super.initState();
-
     ToastContext().init(context);
-
-    _lerFeedEstatico();
+    _carregarDados();
   }
 
-  Future<void> _lerFeedEstatico() async {
-    String conteudoJson =
-    await rootBundle.loadString("lib/recursos/jsons/alunosFeed.json");
-    _feedDeAlunos = await json.decode(conteudoJson);
+  Future<void> _carregarDados() async {
+    try {
+      setState(() {
+        _carregando = true;
+        _erro = null;
+      });
 
-    _carregarAluno();
-  }
+      // Carregar aluno
+      final alunos = await AlunosService.getAlunos();
+      final aluno = alunos.firstWhere((a) => a.id == estadoApp.idAluno);
+      print('aluno $aluno');
 
-  void _carregarAluno() {
-    setState(() {
-      _aluno = _feedDeAlunos["alunos"]
-          .firstWhere((aluno) => aluno["_id"] == estadoApp.idAluno);
-    });
-
-    _temAluno = _aluno != null
-        ? _EstadoAluno.temAluno
-        : _EstadoAluno.semAluno;
+      // Carregar treinos do aluno
+      final treinos = await TreinosService.getTreinosDoAluno(aluno.id);
+      print('treinos $treinos');
+      setState(() {
+        _aluno = aluno;
+        _treinos = treinos;
+        _carregando = false;
+      });
+    } catch (e) {
+      setState(() {
+        _erro = e.toString();
+        _carregando = false;
+      });
+    }
   }
 
   String getFormattedDate(String date) {
-    var dateParse = DateTime.parse(date);
-    var formattedDate = DateFormat('dd/MM/yyyy').format(dateParse);
-    return formattedDate;
-  }
-
-  Widget _exibirAluno() {
-    bool usuarioLogado = false; // corrigir aqui
-
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Row(children: [
-          Padding(
-              padding: const EdgeInsets.only(left: 10.0, bottom: 5.0),
-              child: Text(
-                "Aluno " + _aluno["nome"],
-                style: const TextStyle(fontSize: 15),
-              )),
-          const Spacer(),
-          GestureDetector(
-            onTap: () {
-              estadoApp.mostrarAlunos();
-            },
-            child: const Icon(Icons.arrow_back, size: 30),
-          )
-        ]),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          SizedBox(
-            height: 230,
-            child: Align(
-                alignment: Alignment.center,
-                child: CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  radius: 150,
-                  child: Image.asset('lib/recursos/imagens/user.png'))
-            ),
-          ),
-          Align(
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  Text(
-                    _aluno["nome"],
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 30),
-                  ),
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Cadastro\n',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        TextSpan(
-                          text: getFormattedDate(_aluno["cadastro"]),
-                          style: TextStyle(
-                            fontSize: 20, // Font size for the second line
-                          ),
-                        ),
-                      ],
-                    ),
-                    style: TextStyle(
-                      height: 1.3, // Line height
-                    ),
-                  )
-                ],
-              )
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Text(
-                "Treinos",
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 25),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child:
-                FlatList(
-                    data: _aluno["treinos"],
-                    numColumns: 1,
-                    buildItem: (item, index) {
-                      return SizedBox(
-                          height: estadoApp.altura * 0.5,
-                          child: CardTreinoAluno(treino: item, idAluno: _aluno["_id"]));
-                    }),
-            )
-          ),
-
-        ],
-      ),
-    );
+    try {
+      var dateParse = DateTime.parse(date);
+      var formattedDate = DateFormat('dd/MM/yyyy').format(dateParse);
+      return formattedDate;
+    } catch (e) {
+      return date;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget detalhes = const SizedBox.shrink();
-
-    if (_temAluno == _EstadoAluno.naoVerificado) {
-      detalhes = const SizedBox.shrink();
-    } else if (_temAluno == _EstadoAluno.temAluno) {
-      detalhes = _exibirAluno();
-    } else {
-      // detalhes = _exibirMensagemAlunoInexistente();
+    if (_carregando) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
     }
 
-    return detalhes;
+    if (_erro != null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Erro'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => estadoApp.mostrarAlunos(),
+            ),
+          ],
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Erro ao carregar dados: $_erro'),
+              ElevatedButton(
+                onPressed: _carregarDados,
+                child: const Text('Tentar novamente'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    if (_aluno == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Aluno não encontrado'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => estadoApp.mostrarAlunos(),
+            ),
+          ],
+        ),
+        body: const Center(
+          child: Text('Aluno não encontrado'),
+        ),
+      );
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Dados do Aluno'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              await AuthService.logout();
+              estadoApp.mostrarLogin();
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => estadoApp.mostrarAlunos(),
+          ),
+        ],
+      ),
+      body: RefreshIndicator(
+        onRefresh: _carregarDados,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                height: 230,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    radius: 150,
+                    child: _aluno!.avatar.isEmpty
+                        ? Image.asset('lib/recursos/imagens/user.png')
+                        : Image.network(_aluno!.avatar),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _aluno!.nome,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Criado em: ${getFormattedDate(_aluno!.data_criacao)}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    Text(
+                      'Última atualização: ${getFormattedDate(_aluno!.data_atualizacao)}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Text(
+                  'Treinos',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              if (_treinos.isEmpty)
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Center(
+                    child: Text(
+                      'Nenhum treino cadastrado',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                )
+              else
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.5,
+                  ),
+                  child: FlatList(
+                    data: _treinos,
+                    buildItem: (treino, index) {
+                      return CardTreinoAluno(
+                        treino: treino,
+                        idAluno: _aluno!.id,
+                      );
+                    },
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

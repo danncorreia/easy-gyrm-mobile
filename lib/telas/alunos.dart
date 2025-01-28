@@ -1,12 +1,11 @@
 // ignore_for_file: dead_code
 
-import 'dart:convert';
-
 import 'package:easy_gym_mobile/componentes/card_aluno.dart';
+import 'package:easy_gym_mobile/servicos/alunos_service.dart';
 import 'package:flat_list/flat_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:easy_gym_mobile/estado.dart';
+import 'package:easy_gym_mobile/servicos/auth_service.dart';
 
 class Alunos extends StatefulWidget {
   const Alunos({super.key});
@@ -17,120 +16,155 @@ class Alunos extends StatefulWidget {
   }
 }
 
-const int tamanhoDaPagina = 6;
+const int tamanhoDaPagina = 10;
 
 class _EstadoAlunos extends State<Alunos> {
-  late dynamic _feedDeAlunos;
+  List<Aluno> _alunos = [];
   bool _carregando = false;
-  List<dynamic> _alunos = [];
+  bool _erro = false;
+  String _mensagemErro = '';
 
   final TextEditingController _controladorDoFiltro = TextEditingController();
   String _filtro = "";
 
-  int _proximaPagina = 1;
-
   @override
   void initState() {
     super.initState();
-
-    _lerFeedEstatico();
-  }
-
-  Future<void> _lerFeedEstatico() async {
-    final String resposta =
-    await rootBundle.loadString('lib/recursos/jsons/alunosFeed.json');
-    _feedDeAlunos = await jsonDecode(resposta);
-
     _carregarAlunos();
   }
 
-  void _carregarAlunos() {
+  Future<void> _carregarAlunos() async {
     setState(() {
       _carregando = true;
+      _erro = false;
+      _mensagemErro = '';
     });
 
-    if (_filtro.isNotEmpty) {
-      _alunos = _alunos
-          .where((aluno) =>
-          aluno["nome"].toLowerCase().contains(_filtro))
-          .toList();
-    } else {
-      final totalDeAlunosParaCarregar = _proximaPagina * tamanhoDaPagina;
-      if (_feedDeAlunos["alunos"].length >= totalDeAlunosParaCarregar) {
-        _alunos =
-            _feedDeAlunos["alunos"].sublist(0, totalDeAlunosParaCarregar);
-      }
+    try {
+      final alunos = await AlunosService.getAlunos();
+      setState(() {
+        _alunos = alunos;
+        if (_filtro.isNotEmpty) {
+          _alunos = _alunos
+              .where((aluno) =>
+                  aluno.nome.toLowerCase().contains(_filtro.toLowerCase()))
+              .toList();
+        }
+      });
+    } catch (e) {
+      setState(() {
+        _erro = true;
+        _mensagemErro = e.toString();
+      });
+    } finally {
+      setState(() {
+        _carregando = false;
+      });
     }
-
-    setState(() {
-      _carregando = false;
-      _proximaPagina++;
-    });
   }
 
   Future<void> _atualizarAlunos() async {
-    _alunos = [];
-    _proximaPagina = 1;
-
     _controladorDoFiltro.text = "";
     _filtro = "";
-
-    _carregarAlunos();
+    await _carregarAlunos();
   }
 
   void _aplicarFiltro(String filtro) {
-    _filtro = filtro;
-
-    _carregarAlunos();
+    setState(() {
+      _filtro = filtro;
+      if (_filtro.isNotEmpty) {
+        _alunos = _alunos
+            .where((aluno) =>
+                aluno.nome.toLowerCase().contains(_filtro.toLowerCase()))
+            .toList();
+      } else {
+        _carregarAlunos();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    bool usuarioLogado = false; // corrigir aqui
+    if (_carregando) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
 
-    return _carregando
-        ? const Center(child: CircularProgressIndicator())
-        : Scaffold(
-        appBar: AppBar(actions: [
+    if (_erro) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Alunos'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () async {
+                await AuthService.logout();
+                estadoApp.mostrarLogin();
+              },
+            ),
+          ],
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Erro: $_mensagemErro'),
+              ElevatedButton(
+                onPressed: _carregarAlunos,
+                child: const Text('Tentar novamente'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Alunos'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              await AuthService.logout();
+              estadoApp.mostrarLogin();
+            },
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _controladorDoFiltro,
+              decoration: const InputDecoration(
+                labelText: 'Filtrar alunos',
+                suffixIcon: Icon(Icons.search),
+              ),
+              onChanged: _aplicarFiltro,
+            ),
+          ),
           Expanded(
-              child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10, bottom: 10, left: 60, right: 20),
-                  child: TextField(
-                    controller: _controladorDoFiltro,
-                    onSubmitted: (filtro) {
-                      _aplicarFiltro(filtro);
+            child: RefreshIndicator(
+              onRefresh: _atualizarAlunos,
+              child: FlatList(
+                data: _alunos,
+                buildItem: (aluno, int index) {
+                  return CardAluno(
+                    nome: aluno.nome,
+                    avatar: aluno.avatar,
+                    onTap: () {
+                      estadoApp.mostrarDadosAluno(aluno.id);
                     },
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        suffixIcon: Icon(Icons.search)),
-                  ))),
-          usuarioLogado
-              ? IconButton(
-              onPressed: () {
-                // preencher aqui
-              },
-              icon: const Icon(Icons.logout))
-              : IconButton(
-              onPressed: () {
-                // preencher aqui
-              },
-              icon: const Icon(Icons.login))
-        ]),
-        body: FlatList(
-            data: _alunos,
-            loading: _carregando,
-            numColumns: 1,
-            onRefresh: () => _atualizarAlunos(),
-            onEndReached: () => _carregarAlunos(),
-            buildItem: (item, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4.0), // Espaçamento vertical
-                child: SizedBox(
-                    height: estadoApp.altura * 0.1,
-                    child: CardAluno(aluno: item)
-                )
-              );
-            }));
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

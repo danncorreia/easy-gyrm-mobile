@@ -1,12 +1,15 @@
 import 'package:easy_gym_mobile/telas/alunos.dart';
 import 'package:easy_gym_mobile/telas/dados_alunos.dart';
 import 'package:easy_gym_mobile/telas/dados_treino.dart';
+import 'package:easy_gym_mobile/telas/login.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_gym_mobile/estado.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_gym_mobile/servicos/auth_service.dart';
 
-
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await AuthService.init();
   runApp(const MyApp());
 }
 
@@ -55,6 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
       tela = const DadosAlunos();
     } else if (estadoApp.mostrandoDadosTreino()) {
       tela = const DadosTreino();
+    } else if (estadoApp.mostrandoLogin()) {
+      tela = const Login();
     }
 
     return tela;

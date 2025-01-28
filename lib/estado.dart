@@ -1,23 +1,51 @@
 import 'package:flutter/material.dart';
+import 'servicos/treinos_service.dart';
 
-enum Situacao { mostrandoAlunos, mostrandoDadosAluno, mostrarDadosTreino }
+enum Situacao {
+  mostrandoAlunos,
+  mostrandoDadosAluno,
+  mostrarDadosTreino,
+  mostrandoLogin
+}
 
 class Estado extends ChangeNotifier {
-  Situacao _situacao = Situacao.mostrandoAlunos;
+  Situacao _situacao = Situacao.mostrandoLogin;
+  String? _token;
 
   double _altura = 0, _largura = 0;
   double get altura => _altura;
   double get largura => _largura;
 
-  late int _idAluno;
-  late int _idTreino;
+  late int _idEducador;
+  late String _idAluno;
+  late String _idTreino;
+  Treino? _treino;
 
-  int get idAluno => _idAluno;
-  int get idTreino => _idTreino;
+  int get idEducador => _idEducador;
+  String get idAluno => _idAluno;
+  String get idTreino => _idTreino;
+  Treino? get treino => _treino;
+
+  String? get token => _token;
 
   void setDimensoes(double altura, double largura) {
     _altura = altura;
     _largura = largura;
+  }
+
+  void setToken(String? token) {
+    _token = token;
+    notifyListeners();
+  }
+
+  void mostrarLogin() {
+    _situacao = Situacao.mostrandoLogin;
+
+    notifyListeners();
+  }
+
+  bool mostrandoLogin() {
+    return _situacao == Situacao.mostrandoLogin;
   }
 
   void mostrarAlunos() {
@@ -30,7 +58,7 @@ class Estado extends ChangeNotifier {
     return _situacao == Situacao.mostrandoAlunos;
   }
 
-  void mostrarDadosAluno(int idAluno) {
+  void mostrarDadosAluno(String idAluno) {
     _situacao = Situacao.mostrandoDadosAluno;
     _idAluno = idAluno;
 
@@ -41,10 +69,11 @@ class Estado extends ChangeNotifier {
     return _situacao == Situacao.mostrandoDadosAluno;
   }
 
-  void mostrarDadosTreino(int idAluno, int idTreino) {
+  void mostrarDadosTreino(String idAluno, String idTreino, Treino treino) {
     _situacao = Situacao.mostrarDadosTreino;
     _idAluno = idAluno;
     _idTreino = idTreino;
+    _treino = treino;
 
     notifyListeners();
   }

@@ -1,12 +1,11 @@
 // ignore_for_file: dead_code
 
-import 'dart:convert';
-
 import 'package:easy_gym_mobile/componentes/card_exercicio.dart';
+import 'package:easy_gym_mobile/estado.dart';
+import 'package:easy_gym_mobile/servicos/auth_service.dart';
+import 'package:easy_gym_mobile/servicos/treinos_service.dart';
 import 'package:flat_list/flat_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:easy_gym_mobile/estado.dart';
 
 class DadosTreino extends StatefulWidget {
   const DadosTreino({super.key});
@@ -17,127 +16,130 @@ class DadosTreino extends StatefulWidget {
   }
 }
 
-const int tamanhoDaPagina = 6;
-
 class _EstadoDadosTreino extends State<DadosTreino> {
-  late dynamic _treino;
   bool _carregando = false;
-  List<dynamic> _exercicios = [];
-
-  final TextEditingController _controladorDoFiltro = TextEditingController();
+  List<Exercicio> _exercicios = [];
   String _filtro = "";
-
-  int _proximaPagina = 1;
+  final TextEditingController _controladorDoFiltro = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-
-    _lerFeedEstatico();
-  }
-
-  Future<void> _lerFeedEstatico() async {
-    final String resposta =
-    await rootBundle.loadString('lib/recursos/jsons/alunosFeed.json');
-    var temp = await jsonDecode(resposta);
-
-    var tempAluno = temp["alunos"]
-        .firstWhere((aluno) => aluno["_id"] == estadoApp.idAluno);
-
-    _treino = tempAluno["treinos"]
-        .firstWhere((exercicio) => exercicio["id_treino"] == estadoApp.idTreino);
-
     _carregarDadosTreino();
   }
 
   void _carregarDadosTreino() {
+    if (estadoApp.treino == null) {
+      print("Treino ${estadoApp.treino}");
+      setState(() {
+        _carregando = false;
+        _exercicios = [];
+      });
+      return;
+    }
+
     setState(() {
       _carregando = true;
     });
 
     if (_filtro.isNotEmpty) {
-      _exercicios = _treino
+      _exercicios = estadoApp.treino!.exercicios
           .where((exercicio) =>
-          exercicio["nome"].toLowerCase().contains(_filtro))
+              exercicio.nome.toLowerCase().contains(_filtro.toLowerCase()))
           .toList();
     } else {
-      final totalDeDadosTreinoParaCarregar = _proximaPagina * tamanhoDaPagina;
-      if (_treino["exercicios"].length >= totalDeDadosTreinoParaCarregar) {
-        _exercicios =
-            _treino["exercicios"].sublist(0, totalDeDadosTreinoParaCarregar);
-      }
+      _exercicios = estadoApp.treino!.exercicios;
     }
-    print(_treino["exercicios"]);
-    print(_exercicios);
 
     setState(() {
       _carregando = false;
-      _proximaPagina++;
     });
   }
 
   Future<void> _atualizarDadosTreino() async {
-    _exercicios = [];
-    _proximaPagina = 1;
-
     _controladorDoFiltro.text = "";
     _filtro = "";
-
     _carregarDadosTreino();
   }
 
   void _aplicarFiltro(String filtro) {
-    _filtro = filtro;
-
-    _carregarDadosTreino();
+    setState(() {
+      _filtro = filtro;
+      _carregarDadosTreino();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    bool usuarioLogado = false; // corrigir aqui
+    if (estadoApp.treino == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Treino não encontrado'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => estadoApp.mostrarDadosAluno(estadoApp.idAluno),
+            ),
+          ],
+        ),
+        body: const Center(
+          child: Text('Treino não encontrado'),
+        ),
+      );
+    }
 
-    return _carregando
-        ? const Center(child: CircularProgressIndicator())
-        : Scaffold(
-        appBar: AppBar(actions: [
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(estadoApp.treino!.nome),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              await AuthService.logout();
+              estadoApp.mostrarLogin();
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => estadoApp.mostrarDadosAluno(estadoApp.idAluno),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              controller: _controladorDoFiltro,
+              decoration: const InputDecoration(
+                labelText: 'Filtrar exercícios',
+                border: OutlineInputBorder(),
+                suffixIcon: Icon(Icons.search),
+              ),
+              onChanged: _aplicarFiltro,
+            ),
+          ),
           Expanded(
-              child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10, bottom: 10, left: 60, right: 20),
-                  child: TextField(
-                    controller: _controladorDoFiltro,
-                    onSubmitted: (filtro) {
-                      _aplicarFiltro(filtro);
-                    },
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        suffixIcon: Icon(Icons.search)),
-                  ))),
-          usuarioLogado
-              ? IconButton(
-              onPressed: () {
-                // preencher aqui
-              },
-              icon: const Icon(Icons.logout))
-              : IconButton(
-              onPressed: () {
-                // preencher aqui
-              },
-              icon: const Icon(Icons.login))
-        ]),
-        body: FlatList(
-            data: _exercicios,
-            loading: _carregando,
-            numColumns: 1,
-            onRefresh: () => _atualizarDadosTreino(),
-            onEndReached: () => _carregarDadosTreino(),
-            buildItem: (item, index) {
-              return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 1.0),
-                  child: SizedBox(
-                      child: CardExercicio(exercicio: item)
-                  )
-              );
-            }));
+            child: _carregando
+                ? const Center(child: CircularProgressIndicator())
+                : RefreshIndicator(
+                    onRefresh: _atualizarDadosTreino,
+                    child: _exercicios.isEmpty
+                        ? const Center(
+                            child: Text('Nenhum exercício encontrado'),
+                          )
+                        : ListView.builder(
+                            itemCount: _exercicios.length,
+                            itemBuilder: (context, index) {
+                              return CardExercicio(
+                                exercicio: _exercicios[index],
+                              );
+                            },
+                          ),
+                  ),
+          ),
+        ],
+      ),
+    );
   }
 }

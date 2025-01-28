@@ -13,19 +13,51 @@
           "exercicios": [
             {
               "id_exercicio": 1,
-                    "nome": "Agachamento no hack",
-      "img": "lib/recursos/imagens/agachamento.png",
-              "series": 3,
-              "repeticoes": 10,
-              "carga": 20
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             },
             {
               "id_exercicio": 2,
-                    "nome": "Supino reto com barra",
-        "img": "lib/recursos/imagens/supino.png",
-              "series": 3,
-              "repeticoes": 10,
-              "carga": 20
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             }
           ]
         }
@@ -45,19 +77,51 @@
           "exercicios": [
             {
               "id_exercicio": 1,
-                    "nome": "Agachamento no hack",
-      "img": "lib/recursos/imagens/agachamento.png",
-              "series": 4,
-              "repeticoes": 12,
-              "carga": 15
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             },
             {
               "id_exercicio": 2,
-                    "nome": "Supino reto com barra",
-        "img": "lib/recursos/imagens/supino.png",
-              "series": 4,
-              "repeticoes": 12,
-              "carga": 15
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             }
           ]
         }
@@ -76,16 +140,48 @@
           "exercicios": [
             {
               "id_exercicio": 1,
-                    "nome": "Agachamento no hack",
-      "img": "lib/recursos/imagens/agachamento.png",
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
               "series": 2,
               "repeticoes": 15,
               "carga": 10
             },
             {
               "id_exercicio": 2,
-                    "nome": "Supino reto com barra",
-        "img": "lib/recursos/imagens/supino.png",
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
               "series": 2,
               "repeticoes": 15,
               "carga": 10
@@ -107,19 +203,51 @@
           "exercicios": [
             {
               "id_exercicio": 1,
-                    "nome": "Agachamento no hack",
-      "img": "lib/recursos/imagens/agachamento.png",
-              "series": 3,
-              "repeticoes": 20,
-              "carga": 5
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             },
             {
               "id_exercicio": 2,
-                    "nome": "Supino reto com barra",
-        "img": "lib/recursos/imagens/supino.png",
-              "series": 3,
-              "repeticoes": 20,
-              "carga": 5
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             }
           ]
         }
@@ -138,19 +266,51 @@
           "exercicios": [
             {
               "id_exercicio": 1,
-                    "nome": "Agachamento no hack",
-      "img": "lib/recursos/imagens/agachamento.png",
-              "series": 5,
-              "repeticoes": 8,
-              "carga": 25
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             },
             {
               "id_exercicio": 2,
-                    "nome": "Supino reto com barra",
-        "img": "lib/recursos/imagens/supino.png",
-              "series": 5,
-              "repeticoes": 8,
-              "carga": 25
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             }
           ]
         }
@@ -169,19 +329,51 @@
           "exercicios": [
             {
               "id_exercicio": 1,
-                    "nome": "Agachamento no hack",
-      "img": "lib/recursos/imagens/agachamento.png",
-              "series": 4,
-              "repeticoes": 10,
-              "carga": 20
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             },
             {
               "id_exercicio": 2,
-                    "nome": "Supino reto com barra",
-        "img": "lib/recursos/imagens/supino.png",
-              "series": 4,
-              "repeticoes": 10,
-              "carga": 20
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             }
           ]
         }
@@ -200,19 +392,51 @@
           "exercicios": [
             {
               "id_exercicio": 1,
-                    "nome": "Agachamento no hack",
-      "img": "lib/recursos/imagens/agachamento.png",
-              "series": 3,
-              "repeticoes": 12,
-              "carga": 30
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             },
             {
               "id_exercicio": 2,
-                    "nome": "Supino reto com barra",
-        "img": "lib/recursos/imagens/supino.png",
-              "series": 3,
-              "repeticoes": 12,
-              "carga": 30
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             }
           ]
         }
@@ -244,6 +468,38 @@
               "series": 2,
               "repeticoes": 15,
               "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             }
           ]
         }
@@ -262,19 +518,51 @@
           "exercicios": [
             {
               "id_exercicio": 1,
-                    "nome": "Agachamento no hack",
-      "img": "lib/recursos/imagens/agachamento.png",
-              "series": 3,
-              "repeticoes": 20,
-              "carga": 5
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             },
             {
               "id_exercicio": 2,
-                    "nome": "Supino reto com barra",
-        "img": "lib/recursos/imagens/supino.png",
-              "series": 3,
-              "repeticoes": 20,
-              "carga": 5
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             }
           ]
         }
@@ -293,19 +581,51 @@
           "exercicios": [
             {
               "id_exercicio": 1,
-                    "nome": "Agachamento no hack",
-      "img": "lib/recursos/imagens/agachamento.png",
-              "series": 5,
-              "repeticoes": 8,
-              "carga": 25
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             },
             {
               "id_exercicio": 2,
-                    "nome": "Supino reto com barra",
-        "img": "lib/recursos/imagens/supino.png",
-              "series": 5,
-              "repeticoes": 8,
-              "carga": 25
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 1,
+              "nome": "Agachamento no hack",
+              "img": "lib/recursos/imagens/agachamento.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
+            },
+            {
+              "id_exercicio": 2,
+              "nome": "Supino reto com barra",
+              "img": "lib/recursos/imagens/supino.png",
+              "series": 2,
+              "repeticoes": 15,
+              "carga": 10
             }
           ]
         }
