@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:get_storage/get_storage.dart';
@@ -62,6 +63,7 @@ class AuthService {
 
         return token;
       }
+      print(response.body);
       return null;
     } catch (e) {
       print('Erro ao fazer login: $e');

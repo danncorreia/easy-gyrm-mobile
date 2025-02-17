@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:easy_gym_mobile/estado.dart';
@@ -43,7 +45,7 @@ class _EstadoLogin extends State<Login> {
         final token = await AuthService.login(
           _emailController.text,
           _senhaController.text,
-        );
+        ).timeout(const Duration(seconds: 10));
 
         if (token != null) {
           estadoApp.setToken(token);
@@ -57,6 +59,26 @@ class _EstadoLogin extends State<Login> {
               ),
             );
           }
+        }
+      } on TimeoutException {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                  'Tempo de conexão esgotado. Por favor, tente novamente.'),
+              backgroundColor: Colors.red,
+              duration: Duration(seconds: 3),
+            ),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Erro: $e'),
+              backgroundColor: Colors.red,
+            ),
+          );
         }
       } finally {
         if (mounted) {
